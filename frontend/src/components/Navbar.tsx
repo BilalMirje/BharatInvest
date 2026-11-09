@@ -1,7 +1,6 @@
-
-import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../auth/context/AuthContext';
+import { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../auth/context/AuthContext";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -13,7 +12,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate("/");
     close();
   };
 
@@ -22,15 +21,15 @@ export default function Navbar() {
   const linkClass = (path: string) =>
     `font-medium transition-colors ${
       isActive(path)
-        ? 'text-primary-600'
-        : 'text-gray-600 hover:text-primary-600'
+        ? "text-primary-600"
+        : "text-gray-600 hover:text-primary-600"
     }`;
 
   const mobileLinkClass = (path: string) =>
     `block px-3 py-3 rounded-lg font-medium ${
       isActive(path)
-        ? 'bg-primary-50 text-primary-600'
-        : 'text-gray-700 hover:bg-gray-50'
+        ? "bg-primary-50 text-primary-600"
+        : "text-gray-700 hover:bg-gray-50"
     }`;
 
   return (
@@ -38,22 +37,24 @@ export default function Navbar() {
       <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-
             {/* Brand */}
-            <Link to="/" onClick={close} className="flex items-center gap-1">
+            <Link
+              to="/"
+              onClick={close}
+              translate="no"
+              className="flex items-center gap-1"
+            >
               <span className="text-2xl font-bold text-primary-700">
                 Bharat
               </span>
-              <span className="text-2xl font-bold text-accent-500">
-                Invest
-              </span>
+              <span className="text-2xl font-bold text-accent-500">Invest</span>
             </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-5">
               {!user ? (
                 <>
-                  <Link to="/login" className={linkClass('/login')}>
+                  <Link to="/login" className={linkClass("/login")}>
                     Login
                   </Link>
 
@@ -66,50 +67,50 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  {user.role === 'ADMIN' && (
-                    <Link to="/admin" className={linkClass('/admin')}>
+                  {user.role === "ADMIN" && (
+                    <Link to="/admin" className={linkClass("/admin")}>
                       Dashboard
                     </Link>
                   )}
 
-                  {user.role === 'FOUNDER' && (
+                  {user.role === "FOUNDER" && (
                     <>
                       <Link
                         to="/founder/dashboard"
-                        className={linkClass('/founder/dashboard')}
+                        className={linkClass("/founder/dashboard")}
                       >
                         My Businesses
                       </Link>
 
                       <Link
                         to="/founder/offers"
-                        className={linkClass('/founder/offers')}
+                        className={linkClass("/founder/offers")}
                       >
                         Offers
                       </Link>
                     </>
                   )}
 
-                  {user.role === 'INVESTOR' && (
+                  {user.role === "INVESTOR" && (
                     <>
                       <Link
                         to="/investor/browse"
-                        className={linkClass('/investor/browse')}
+                        className={linkClass("/investor/browse")}
                       >
                         Browse
                       </Link>
 
                       <Link
                         to="/investor/offers"
-                        className={linkClass('/investor/offers')}
+                        className={linkClass("/investor/offers")}
                       >
                         My Offers
                       </Link>
                     </>
                   )}
 
-                  {user.role !== 'ADMIN' && (
-                    <Link to="/chat" className={linkClass('/chat')}>
+                  {user.role !== "ADMIN" && (
+                    <Link to="/chat" className={linkClass("/chat")}>
                       Chat
                     </Link>
                   )}
@@ -142,23 +143,22 @@ export default function Navbar() {
                 <div className="w-5 flex flex-col gap-1">
                   <span
                     className={`h-0.5 bg-gray-700 transition-all ${
-                      open ? 'rotate-45 translate-y-1.5' : ''
+                      open ? "rotate-45 translate-y-1.5" : ""
                     }`}
                   />
                   <span
                     className={`h-0.5 bg-gray-700 transition-all ${
-                      open ? 'opacity-0' : ''
+                      open ? "opacity-0" : ""
                     }`}
                   />
                   <span
                     className={`h-0.5 bg-gray-700 transition-all ${
-                      open ? '-rotate-45 -translate-y-1.5' : ''
+                      open ? "-rotate-45 -translate-y-1.5" : ""
                     }`}
                   />
                 </div>
               </button>
             </div>
-
           </div>
         </div>
       </nav>
@@ -166,7 +166,7 @@ export default function Navbar() {
       {/* Mobile Drawer */}
       <div
         className={`md:hidden fixed inset-0 z-[60] ${
-          open ? 'visible' : 'invisible pointer-events-none'
+          open ? "visible" : "invisible pointer-events-none"
         }`}
       >
         {/* Overlay */}
@@ -175,25 +175,28 @@ export default function Navbar() {
           aria-label="Close menu"
           onClick={close}
           className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${
-            open ? 'opacity-100' : 'opacity-0'
+            open ? "opacity-100" : "opacity-0"
           }`}
         />
 
         {/* Side Panel */}
         <aside
           className={`fixed right-0 top-0 z-[70] h-full w-80 max-w-[85vw] bg-white shadow-xl flex flex-col drawer-transition ${
-            open ? 'translate-x-0' : 'translate-x-full'
+            open ? "translate-x-0" : "translate-x-full"
           }`}
         >
           {/* Drawer Header */}
           <div className="flex items-center justify-between px-5 h-16 border-b border-gray-200">
-            <Link to="/" onClick={close} className="flex items-center gap-1">
+            <Link
+              to="/"
+              onClick={close}
+              translate="no"
+              className="flex items-center gap-1"
+            >
               <span className="text-2xl font-bold text-primary-700">
                 Bharat
               </span>
-              <span className="text-2xl font-bold text-accent-500">
-                Invest
-              </span>
+              <span className="text-2xl font-bold text-accent-500">Invest</span>
             </Link>
 
             <button
@@ -213,7 +216,7 @@ export default function Navbar() {
                 <Link
                   to="/login"
                   onClick={close}
-                  className={mobileLinkClass('/login')}
+                  className={mobileLinkClass("/login")}
                 >
                   Login
                 </Link>
@@ -221,29 +224,29 @@ export default function Navbar() {
                 <Link
                   to="/register"
                   onClick={close}
-                  className={mobileLinkClass('/register')}
+                  className={mobileLinkClass("/register")}
                 >
                   Register
                 </Link>
               </>
             ) : (
               <>
-                {user.role === 'ADMIN' && (
+                {user.role === "ADMIN" && (
                   <Link
                     to="/admin"
                     onClick={close}
-                    className={mobileLinkClass('/admin')}
+                    className={mobileLinkClass("/admin")}
                   >
                     Dashboard
                   </Link>
                 )}
 
-                {user.role === 'FOUNDER' && (
+                {user.role === "FOUNDER" && (
                   <>
                     <Link
                       to="/founder/dashboard"
                       onClick={close}
-                      className={mobileLinkClass('/founder/dashboard')}
+                      className={mobileLinkClass("/founder/dashboard")}
                     >
                       My Businesses
                     </Link>
@@ -251,19 +254,19 @@ export default function Navbar() {
                     <Link
                       to="/founder/offers"
                       onClick={close}
-                      className={mobileLinkClass('/founder/offers')}
+                      className={mobileLinkClass("/founder/offers")}
                     >
                       Offers
                     </Link>
                   </>
                 )}
 
-                {user.role === 'INVESTOR' && (
+                {user.role === "INVESTOR" && (
                   <>
                     <Link
                       to="/investor/browse"
                       onClick={close}
-                      className={mobileLinkClass('/investor/browse')}
+                      className={mobileLinkClass("/investor/browse")}
                     >
                       Browse
                     </Link>
@@ -271,18 +274,18 @@ export default function Navbar() {
                     <Link
                       to="/investor/offers"
                       onClick={close}
-                      className={mobileLinkClass('/investor/offers')}
+                      className={mobileLinkClass("/investor/offers")}
                     >
                       My Offers
                     </Link>
                   </>
                 )}
 
-                {user.role !== 'ADMIN' && (
+                {user.role !== "ADMIN" && (
                   <Link
                     to="/chat"
                     onClick={close}
-                    className={mobileLinkClass('/chat')}
+                    className={mobileLinkClass("/chat")}
                   >
                     Chat
                   </Link>
