@@ -10,13 +10,14 @@ export default function CreateBusiness() {
   const [description, setDescription] = useState('');
   const [askAmount, setAskAmount] = useState('');
   const [equityOffered, setEquityOffered] = useState('');
+  const [websiteUrl, setWebsiteUrl] = useState('');
   const navigate = useNavigate();
   const createBiz = useCreateBusiness();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     createBiz.mutate(
-      { name, category, description, askAmount: Number(askAmount), equityOffered: Number(equityOffered) },
+      { name, category, description, askAmount: Number(askAmount), equityOffered: Number(equityOffered), websiteUrl: websiteUrl || undefined },
       {
         onSuccess: () => {
           toast.success('Business created! Waiting for admin approval.');
@@ -66,6 +67,17 @@ export default function CreateBusiness() {
             rows={4}
             className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none"
             placeholder="Describe your business, problem you're solving, target market..."
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Website URL (optional)</label>
+          <input
+            type="url"
+            value={websiteUrl}
+            onChange={(e) => setWebsiteUrl(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none"
+            placeholder="https://www.example.com"
           />
         </div>
 

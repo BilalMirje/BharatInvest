@@ -31,6 +31,7 @@ export interface Business {
   equityOffered: number;
   status: BusinessStatus;
   rejectionReason?: string;
+  websiteUrl?: string;
   founderId: number;
   founderName: string;
   pitchVideoUrl?: string;
@@ -73,6 +74,7 @@ export interface Conversation {
   investorName: string;
   founderId: number;
   founderName: string;
+  unreadCount: number;
   createdAt: string;
 }
 
@@ -86,6 +88,11 @@ export interface ChatMessage {
   read: boolean;
 }
 
+export interface FinancialEntry {
+  label: string;
+  value: number;
+}
+
 export interface AiFeedback {
   overallScore: number;
   strengths: string[];
@@ -95,6 +102,12 @@ export interface AiFeedback {
   pitchTips: string[];
   marketInsights: string;
   summary: string;
+  financialData?: {
+    revenue?: FinancialEntry[];
+    profit?: FinancialEntry[];
+    unitEconomics?: { cac?: number; ltv?: number; margin?: number };
+    notes?: string;
+  };
   error?: string;
 }
 

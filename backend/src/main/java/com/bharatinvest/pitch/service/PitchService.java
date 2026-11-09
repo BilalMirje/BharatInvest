@@ -77,7 +77,9 @@ public class PitchService {
         pitch.setCloudinaryPublicId(req.getCloudinaryPublicId());
         pitch.setDescription(req.getDescription());
         pitch.setStatus(PitchStatus.DRAFT);
-        pitch.setAiFeedback(null);
+        if (req.getAiFeedback() != null) {
+            pitch.setAiFeedback(req.getAiFeedback());
+        }
 
         return PitchResponse.from(pitchRepository.save(pitch));
     }
@@ -96,6 +98,18 @@ public class PitchService {
 
         pitch.setAiFeedback(feedback);
         return PitchResponse.from(pitchRepository.save(pitch));
+    }
+
+    public String analyzeByBusiness(Long businessId, String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Business business = businessRepository.findById(businessId)
+                .orElseThrow(() -> new RuntimeException("Business not found"));
+        if (!business.getFounder().getId().equals(user.getId())) {
+            throw new RuntimeException("Not your business");
+        }
+        return geminiService.analyzePitch(
+                "", business.getName(), business.getDescription(), business.getAskAmount());
     }
 
     public PitchResponse submitPitch(Long pitchId, String email) {

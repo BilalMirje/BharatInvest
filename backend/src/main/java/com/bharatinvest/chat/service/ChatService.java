@@ -10,6 +10,7 @@ import com.bharatinvest.user.entity.User;
 import com.bharatinvest.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,11 +28,21 @@ public class ChatService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return conversationRepository.findByInvestorIdOrFounderId(user.getId(), user.getId())
                 .stream()
-                .map(ConversationResponse::from)
+                .map(c -> {
+                    ConversationResponse r = ConversationResponse.from(c);
+                    r.setUnreadCount(
+                        chatMessageRepository.countByConversationIdAndReadFalseAndSenderIdNot(c.getId(), user.getId())
+                    );
+                    return r;
+                })
                 .collect(Collectors.toList());
     }
 
-    public List<ChatMessageResponse> getMessages(Long conversationId) {
+    @Transactional
+    public List<ChatMessageResponse> getMessages(Long conversationId, String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        chatMessageRepository.markAsRead(conversationId, user.getId());
         return chatMessageRepository.findByConversationIdOrderBySentAtAsc(conversationId)
                 .stream()
                 .map(ChatMessageResponse::from)

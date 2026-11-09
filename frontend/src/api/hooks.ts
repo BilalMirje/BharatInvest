@@ -70,6 +70,7 @@ export const useConversations = () =>
   useQuery<Conversation[]>({
     queryKey: ['conversations'],
     queryFn: () => api.get('/api/conversations').then((r) => r.data),
+    refetchInterval: 5000,
   });
 
 export const useMessages = (conversationId: number) =>
@@ -127,6 +128,13 @@ export const useAnalyzePitch = () => {
   });
 };
 
+
+export const useAnalyzeByBusiness = () =>
+  useMutation({
+    mutationFn: (businessId: number) =>
+      api.post(`/api/pitches/analyze-business/${businessId}`).then((r) => r.data),
+  });
+
 export const useSubmitPitch = () => {
   const qc = useQueryClient();
   return useMutation({
@@ -164,3 +172,49 @@ export const useRejectOffer = () => {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['receivedOffers'] }),
   });
 };
+
+export const useDeleteBusiness = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => api.delete(`/api/admin/businesses/${id}`).then((r) => r.data),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['allBusinesses'] });
+      qc.invalidateQueries({ queryKey: ['pendingBusinesses'] });
+    },
+  });
+};
+
+export const useAdminInvestors = () =>
+  useQuery<any[]>({
+    queryKey: ['adminInvestors'],
+    queryFn: () => api.get('/api/admin/investors').then((r) => r.data),
+  });
+
+export const useApproveInvestor = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => api.put(`/api/admin/investors/${id}/approve`).then((r) => r.data),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['adminInvestors'] }),
+  });
+};
+
+export const useRejectInvestor = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => api.put(`/api/admin/investors/${id}/reject`).then((r) => r.data),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['adminInvestors'] }),
+  });
+};
+
+export const useInvestorOffers = (investorId: number) =>
+  useQuery<any[]>({
+    queryKey: ['investorOffers', investorId],
+    queryFn: () => api.get(`/api/admin/investors/${investorId}/offers`).then((r) => r.data),
+    enabled: !!investorId,
+  });
+
+export const useTranslate = () =>
+  useMutation({
+    mutationFn: ({ text, language }: { text: string; language: string }) =>
+      api.post('/api/ai/translate', { text, language }).then((r) => r.data),
+  });

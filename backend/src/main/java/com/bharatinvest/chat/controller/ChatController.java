@@ -6,7 +6,6 @@ import com.bharatinvest.chat.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +24,8 @@ public class ChatController {
     }
 
     @GetMapping("/{id}/messages")
-    public ResponseEntity<List<ChatMessageResponse>> getMessages(@PathVariable Long id) {
-        return ResponseEntity.ok(chatService.getMessages(id));
+    public ResponseEntity<List<ChatMessageResponse>> getMessages(@PathVariable Long id, Authentication auth) {
+        return ResponseEntity.ok(chatService.getMessages(id, auth.getName()));
     }
 
     @PostMapping("/{id}/messages")

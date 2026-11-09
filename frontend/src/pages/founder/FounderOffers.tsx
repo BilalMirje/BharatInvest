@@ -15,7 +15,7 @@ export default function FounderOffers() {
   const handleAccept = (id: number) => {
     if (!confirm('Accept this offer? The business will be marked as funded.')) return;
     acceptOffer.mutate(id, {
-      onSuccess: () => toast.success('Offer accepted! Deal done! 🎉'),
+      onSuccess: () => toast.success('Offer accepted — deal done!'),
       onError: (err: any) => toast.error(err.response?.data?.error || 'Failed'),
     });
   };
@@ -40,10 +40,10 @@ export default function FounderOffers() {
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="font-semibold text-gray-900">
-                    {o.investorName} → {o.businessName}
+                    {o.investorName} &rarr; {o.businessName}
                   </h3>
                   <p className="text-primary-600 font-medium mt-1">
-                    ₹{(o.amount/100000).toFixed(1)}L for {o.equityPercent}% equity
+                    ₹{(o.amount / 100000).toFixed(1)}L for {o.equityPercent}% equity
                   </p>
                   {o.message && <p className="text-gray-600 text-sm mt-2">"{o.message}"</p>}
                 </div>
@@ -51,20 +51,15 @@ export default function FounderOffers() {
                   {o.status}
                 </span>
               </div>
-
               {o.status === 'PENDING' && (
                 <div className="flex gap-3 mt-4">
-                  <button
-                    onClick={() => handleAccept(o.id)}
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700"
-                  >
-                    ✓ Accept Deal
+                  <button onClick={() => handleAccept(o.id)}
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700">
+                    Accept Deal
                   </button>
-                  <button
-                    onClick={() => handleReject(o.id)}
-                    className="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-200"
-                  >
-                    ✕ Reject
+                  <button onClick={() => handleReject(o.id)}
+                    className="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-200">
+                    Reject
                   </button>
                 </div>
               )}

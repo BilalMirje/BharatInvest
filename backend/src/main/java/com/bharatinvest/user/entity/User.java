@@ -26,6 +26,10 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @Builder.Default
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private Boolean approved = true;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

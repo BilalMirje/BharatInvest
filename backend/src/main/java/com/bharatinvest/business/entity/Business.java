@@ -38,6 +38,8 @@ public class Business {
     @Column(nullable = false)
     private BusinessStatus status;
 
+    private String websiteUrl;
+
     @Column(length = 1000)
     private String rejectionReason;
 

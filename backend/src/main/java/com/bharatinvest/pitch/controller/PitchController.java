@@ -42,6 +42,15 @@ public class PitchController {
         return ResponseEntity.ok(pitchService.analyzePitch(id));
     }
 
+    @PostMapping("/analyze-business/{businessId}")
+    @PreAuthorize("hasRole('FOUNDER')")
+    public ResponseEntity<java.util.Map<String, String>> analyzeByBusiness(
+            @PathVariable Long businessId, Authentication auth) {
+        String feedback = pitchService.analyzeByBusiness(businessId, auth.getName());
+        return ResponseEntity.ok(java.util.Map.of("aiFeedback", feedback));
+    }
+
+
     @PostMapping("/{id}/submit")
     @PreAuthorize("hasRole('FOUNDER')")
     public ResponseEntity<PitchResponse> submit(@PathVariable Long id, Authentication auth) {

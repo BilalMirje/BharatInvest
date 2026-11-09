@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './auth/context/AuthContext';
 import ProtectedRoute from './auth/ProtectedRoute';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 import LandingPage from './pages/public/LandingPage';
 import Login from './pages/auth/Login';
@@ -29,8 +30,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <BrowserRouter>
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-screen bg-gray-50 flex flex-col">
             <Navbar />
+            <main className="flex-1">
             <Routes>
               {/* Public */}
               <Route path="/" element={<LandingPage />} />
@@ -71,7 +73,19 @@ function App() {
               <Route path="/chat" element={
                 <ProtectedRoute roles={['FOUNDER', 'INVESTOR']}><ChatPage /></ProtectedRoute>
               } />
+              {/* 404 */}
+              <Route path="*" element={
+                <div className="flex items-center justify-center py-32">
+                  <div className="text-center">
+                    <h1 className="text-6xl font-bold text-gray-300 mb-4">404</h1>
+                    <p className="text-gray-500 mb-6">Page not found</p>
+                    <a href="/" className="text-primary-600 font-medium hover:underline">Go Home</a>
+                  </div>
+                </div>
+              } />
             </Routes>
+            </main>
+            <Footer />
           </div>
           <Toaster position="top-right" />
         </BrowserRouter>

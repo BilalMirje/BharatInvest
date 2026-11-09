@@ -18,6 +18,7 @@ public class BusinessResponse {
     private String rejectionReason;
     private Long founderId;
     private String founderName;
+    private String websiteUrl;
     private String pitchVideoUrl;
     private LocalDateTime createdAt;
 
@@ -33,6 +34,7 @@ public class BusinessResponse {
         r.setRejectionReason(b.getRejectionReason());
         r.setFounderId(b.getFounder().getId());
         r.setFounderName(b.getFounder().getName());
+        r.setWebsiteUrl(b.getWebsiteUrl());
         r.setCreatedAt(b.getCreatedAt());
         return r;
     }

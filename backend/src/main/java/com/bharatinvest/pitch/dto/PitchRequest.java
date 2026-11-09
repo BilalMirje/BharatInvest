@@ -15,4 +15,6 @@ public class PitchRequest {
     private String cloudinaryPublicId;
 
     private String description;
+
+    private String aiFeedback;
 }

@@ -20,6 +20,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -43,20 +45,27 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Cannot register as ADMIN");
         }
 
+        boolean isInvestor = request.getRole() == Role.INVESTOR;
+
         User user = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
+                .approved(!isInvestor)
                 .build();
         user = userRepository.save(user);
 
         if (request.getRole() == Role.FOUNDER) {
-            FounderProfile profile = FounderProfile.builder().user(user).build();
-            founderProfileRepository.save(profile);
-        } else if (request.getRole() == Role.INVESTOR) {
-            InvestorProfile profile = InvestorProfile.builder().user(user).build();
-            investorProfileRepository.save(profile);
+            founderProfileRepository.save(FounderProfile.builder().user(user).build());
+        } else if (isInvestor) {
+            investorProfileRepository.save(InvestorProfile.builder().user(user).build());
+        }
+
+        if (isInvestor) {
+            return ResponseEntity.ok(Map.of(
+                    "message", "Registration successful. Your account is pending admin approval.",
+                    "approved", false));
         }
 
         var userDetails = userDetailsService.loadUserByUsername(user.getEmail());
@@ -75,6 +84,11 @@ public class AuthController {
 
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!Boolean.TRUE.equals(user.getApproved())) {
+            return ResponseEntity.status(403).body(Map.of(
+                    "error", "Your account is pending admin approval. Please wait."));
+        }
 
         var userDetails = userDetailsService.loadUserByUsername(user.getEmail());
         String token = jwtService.generateToken(userDetails);

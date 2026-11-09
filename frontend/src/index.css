@@ -1,9 +1,81 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Global Styles */
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
+  top: 0 !important;
+}
+
+.goog-te-banner-frame {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+#google_translate_element {
+  display: flex;
+  align-items: center;
+}
+
+#google_translate_element .goog-te-gadget {
+  font-size: 0 !important;
+  color: transparent !important;
+}
+
+#google_translate_element .goog-te-gadget-simple {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  cursor: pointer;
+}
+
+#google_translate_element .goog-te-gadget-simple img {
+  display: none !important;
+}
+
+#google_translate_element .goog-te-gadget-simple > span {
+  font-size: 0 !important;
+}
+
+#google_translate_element .goog-te-gadget-simple > span::before {
+  content: "अ A";
+  font-size: 18px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+}
+
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Hide only Google Translate top banner */
+iframe.skiptranslate[id=":2.container"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Remove top spacing */
+html body {
+  top: 0 !important;
+  margin-top: 0 !important;
+}
+
+@layer utilities {
+  .drawer-transition {
+    transition: transform 300ms ease-in-out;
+  }
 }

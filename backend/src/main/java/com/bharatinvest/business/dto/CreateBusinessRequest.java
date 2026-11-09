@@ -22,4 +22,6 @@ public class CreateBusinessRequest {
 
     @NotNull @Positive
     private Double equityOffered;
+
+    private String websiteUrl;
 }

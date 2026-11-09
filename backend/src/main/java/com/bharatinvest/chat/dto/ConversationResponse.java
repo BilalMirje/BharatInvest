@@ -13,6 +13,7 @@ public class ConversationResponse {
     private String investorName;
     private Long founderId;
     private String founderName;
+    private long unreadCount;
     private LocalDateTime createdAt;
 
     public static ConversationResponse from(Conversation c) {

@@ -20,16 +20,14 @@ export default function InvestorOffers() {
       ) : offers && offers.length > 0 ? (
         <div className="space-y-4">
           {offers.map((o) => (
-            <div
-              key={o.id}
+            <div key={o.id}
               onClick={() => navigate(`/investor/business/${o.businessId}`)}
-              className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 cursor-pointer hover:shadow-md transition-shadow"
-            >
+              className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 cursor-pointer hover:shadow-md transition-shadow">
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="font-semibold text-gray-900">{o.businessName}</h3>
                   <p className="text-primary-600 font-medium mt-1">
-                    ₹{(o.amount/100000).toFixed(1)}L for {o.equityPercent}% equity
+                    ₹{(o.amount / 100000).toFixed(1)}L for {o.equityPercent}% equity
                   </p>
                   {o.message && <p className="text-gray-500 text-sm mt-2">"{o.message}"</p>}
                 </div>
@@ -38,7 +36,7 @@ export default function InvestorOffers() {
                 </span>
               </div>
               {o.status === 'ACCEPTED' && (
-                <p className="text-green-600 font-medium text-sm mt-3">🎉 Deal done!</p>
+                <p className="text-green-600 font-medium text-sm mt-3">Deal done</p>
               )}
             </div>
           ))}
