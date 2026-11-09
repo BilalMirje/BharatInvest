@@ -126,41 +126,49 @@ export default function Navbar() {
                   </button>
                 </>
               )}
-
-              {/* Google Translate */}
-              <div id="google_translate_element" />
             </div>
 
-            {/* Mobile Hamburger */}
-            <button
-              type="button"
-              onClick={() => setOpen(!open)}
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100"
-              aria-label="Toggle navigation menu"
-              aria-expanded={open}
-            >
-              <div className="w-5 flex flex-col gap-1">
-                <span className={`h-0.5 bg-gray-700 transition-all ${
-                  open ? 'rotate-45 translate-y-1.5' : ''
-                }`} />
-                <span className={`h-0.5 bg-gray-700 transition-all ${
-                  open ? 'opacity-0' : ''
-                }`} />
-                <span className={`h-0.5 bg-gray-700 transition-all ${
-                  open ? '-rotate-45 -translate-y-1.5' : ''
-                }`} />
-              </div>
-            </button>
+            {/* Translate and Mobile Hamburger */}
+            <div className="flex items-center gap-3">
+              <div id="google_translate_element" />
+
+              <button
+                type="button"
+                onClick={() => setOpen(!open)}
+                className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+                aria-label="Toggle navigation menu"
+                aria-expanded={open}
+              >
+                <div className="w-5 flex flex-col gap-1">
+                  <span
+                    className={`h-0.5 bg-gray-700 transition-all ${
+                      open ? 'rotate-45 translate-y-1.5' : ''
+                    }`}
+                  />
+                  <span
+                    className={`h-0.5 bg-gray-700 transition-all ${
+                      open ? 'opacity-0' : ''
+                    }`}
+                  />
+                  <span
+                    className={`h-0.5 bg-gray-700 transition-all ${
+                      open ? '-rotate-45 -translate-y-1.5' : ''
+                    }`}
+                  />
+                </div>
+              </button>
+            </div>
 
           </div>
         </div>
       </nav>
 
       {/* Mobile Drawer */}
-      <div className={`md:hidden fixed inset-0 z-[60] ${
-        open ? 'visible' : 'invisible pointer-events-none'
-      }`}>
-
+      <div
+        className={`md:hidden fixed inset-0 z-[60] ${
+          open ? 'visible' : 'invisible pointer-events-none'
+        }`}
+      >
         {/* Overlay */}
         <button
           type="button"
@@ -177,7 +185,6 @@ export default function Navbar() {
             open ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
-
           {/* Drawer Header */}
           <div className="flex items-center justify-between px-5 h-16 border-b border-gray-200">
             <Link to="/" onClick={close} className="flex items-center gap-1">
@@ -284,7 +291,7 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* User Details & Logout */}
+          {/* User Details and Logout */}
           {user && (
             <div className="border-t border-gray-200 p-5">
               <p className="text-sm text-gray-500 mb-3">
@@ -299,7 +306,6 @@ export default function Navbar() {
               </button>
             </div>
           )}
-
         </aside>
       </div>
     </>
