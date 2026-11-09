@@ -59,15 +59,23 @@ export default function CreateBusiness() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Business Pitch Description <span className="text-red-500">*</span>
+          </label>
+          <p className="text-xs text-gray-400 mb-2">
+            Write a detailed description — Cover: what your business does, the problem you solve,
+            your target market, current traction (users/revenue/growth), how you'll use the funding, and what makes you different.
+          </p>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
-            rows={4}
+            minLength={100}
+            rows={6}
             className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none"
-            placeholder="Describe your business, problem you're solving, target market..."
+            placeholder={"Example: FreshBasket delivers farm-fresh organic vegetables to doorsteps within 2 hours. We solve the problem of unreliable vegetable quality in urban areas. Currently serving Mumbai, Pune, and Bangalore with 5000+ daily orders and ₹15L monthly revenue. Our CAC is ₹120 and LTV is ₹2400. We're seeking funding to expand to 10 more cities and build cold-chain infrastructure..."}
           />
+          <p className="text-xs text-gray-400 mt-1">{description.length}/100 characters minimum</p>
         </div>
 
         <div>
@@ -121,3 +129,4 @@ export default function CreateBusiness() {
     </div>
   );
 }
+
